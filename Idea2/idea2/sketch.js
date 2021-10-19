@@ -1,8 +1,9 @@
 /* 
-Using my previous designs as a template, I created this final concept experimenting with more animations and audio
-clips. For this design I took a sci-fi approach using very futuristic sound clips and creating a design based 
-on what I heard and thought of.
+Staring with a file similar to my first design, I began exploring more audios and corresponding designs. In this exploration
+I spent a lot of time with the random function, each design in this concept follows includes a random aspect, for example the 
+light sensor generates random shapes and random corresponding colours.
 */
+var x = 0;
 
 
 let osc;
@@ -18,16 +19,13 @@ let value1 = 0,
     value3 = 0;
 let song1, song2, song3;
 
-let circleY = 0;
 
 
 function setup() {
 
 
     createCanvas(windowWidth, windowHeight);
-    frameRate(8)
-
-
+    rectMode(CENTER);
 
     ///////////////////////////////////////////////////////////////////
     //Begin serialport library methods, this is using callbacks
@@ -79,9 +77,9 @@ function setup() {
     //serial.on('rawdata', gotRawData);
     // OR
     //serial.onRawData(gotRawData);
-    song1 = createAudio('assets/Reverse.mp3');
-    song2 = createAudio('assets/Beeps.mp3');
-    song3 = createAudio('assets/Chimes.mp3');
+    song1 = createAudio('assets/Synth.mp3');
+    song2 = createAudio('assets/Energy.mp3');
+    song3 = createAudio('assets/Sweep.mp3');
 }
 ////////////////////////////////////////////////////////////////////////////
 // End serialport callbacks
@@ -141,26 +139,26 @@ function gotRawData(thedata) {
 
 
 function draw() {
-    background(0, 59, 89);
 
 
 
 
-    if (value3 > 50) {
-        background(0, 59, 89);
+    if (value3 < 50) {
+        background(255);
         playLight();
-        strokeWeight();
-        stroke(255);
-        for (var x = 0; x <= width; x += 10) {
-            for (var y = 0; y <= height; y += 20) {
-                fill(random(255), 255, 255);
-                ellipse(x, y, 25, 25);
-            }
-        }
+        noStroke(0)
+        stroke(random(255), random(255), random(255), random(255), random(255), random(255))
+        fill(random(255), random(255), random(255), random(255), random(255), random(255))
+        triangle(random(width), random(height), 1800, 100, 1500, 300);
+
+        stroke(random(255), random(255), random(255), random(255), random(255), random(255))
+        fill(random(255), random(255), random(255), random(255), random(255), random(255))
+        triangle(random(width), random(height), 100, 100, 300, 300)
 
 
     }
-    if (value3 < 50) {
+    if (value3 > 0) {
+        background(255);
         song2.stop();
     }
 
@@ -175,15 +173,10 @@ function playButton() {
     if (value1 == 1) {
         song1.loop();
 
-
-        circle(1000, circleY, 200);
-        fill(255);
-        circleY = circleY + 100;
-        if (circleY > height) {
-            circleY = 0;
-
-
-        }
+        x += 0.02;
+        translate(width / 2, height / 2);
+        rotate(x);
+        rect(0, 0, 500, 500);
 
     }
     if (value1 == 0) {
@@ -195,14 +188,11 @@ function playTurn() {
     if (value2 >= 1) {
         song3.loop();
 
-
-
-        stroke(random(255), 255, random(255));
-        strokeWeight(20);
-
-        line(random(width), random(height), random(width), random(height));
-
-        line(random(width), random(height), random(width), random(height));
+        var circleX = random(width);
+        var circleY = random(height);
+        var circleSize = random(300, 500);
+        fill(random(255), random(255), random(255));
+        ellipse(circleX, circleY, circleSize)
 
     }
     if (value2 <= 1) {
